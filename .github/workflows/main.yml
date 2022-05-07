@@ -22,7 +22,7 @@ jobs:
           sudo -E apt-get -yqq install python3
       - name: Install ddddocr
         run: |
-          sudo pip3 install ddddorc
+          sudo pip3 install ddddocr
       - name: Clock In
         env:
           ACCOUNT: ${{ secrets.ACCOUNT }}
