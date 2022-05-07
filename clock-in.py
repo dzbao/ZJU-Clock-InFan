@@ -8,7 +8,8 @@ import re
 import datetime
 import time
 import sys
-
+import requests
+import ddddocr
 
 class DaKa(object):
     """Hit card class
@@ -21,6 +22,7 @@ class DaKa(object):
         save_url: (str) 提交打卡url
         self.headers: (dir) 请求头
         sess: (requests.Session) 统一的session
+        verifyCode: 验证码
     """
 
     def __init__(self, username, password):
@@ -55,6 +57,21 @@ class DaKa(object):
         # check if login successfully
         if '统一身份认证' in res.content.decode():
             raise LoginError('登录失败，请核实账号密码重新登录')
+        
+        
+        
+        captcha_url = 'https://healthreport.zju.edu.cn/ncov/wap/default/code'
+        ocr = ddddocr.DdddOcr()
+
+        sess = requests.session()
+        # 设置 cookie
+        cookie_dict = {'eai-sess': 'xxxxxxxxxxxxxxxxxxxxxxxxx'}
+        sess.cookies = requests.cookies.cookiejar_from_dict(cookie_dict)
+
+        resp = sess.get(captcha_url)
+        captcha = ocr.classification(resp.content)
+        self.verifyCode = captcha
+        print(captcha)
         return self.sess
 
     def post(self):
@@ -99,6 +116,7 @@ class DaKa(object):
         new_info["area"] = "浙江省 杭州市 西湖区"
         new_info["province"] = new_info["area"].split(' ')[0]
         new_info["city"] = new_info["area"].split(' ')[1]
+        new_info["verifyCode"] = self.verifyCode
         # form change
         new_info['jrdqtlqk[]'] = 0
         new_info['jrdqjcqk[]'] = 0
