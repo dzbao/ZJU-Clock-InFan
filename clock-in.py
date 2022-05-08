@@ -104,6 +104,7 @@ class ClockIn(object):
             self.sess.cookies = requests.cookies.cookiejar_from_dict(cookie_dict)
             resp = self.sess.get(url=self.captcha_url, headers=self.headers)
             cap = ocr.classification(resp.content)
+            print("本次验证码为：", cap)
         except Exception as e:
             print("Captcha ocr error: ",e)
 
