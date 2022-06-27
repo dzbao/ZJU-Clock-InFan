@@ -95,18 +95,18 @@ class ClockIn(object):
         
 
         # 试试ocr
-        try:
-            # 查询cookie
-            # print(self.sess.cookies["eai-sess"])
+#         try:
+#             # 查询cookie
+#             # print(self.sess.cookies["eai-sess"])
 
-            ocr = ddddocr.DdddOcr() # 使用老版本ddddocr
-            cookie_dict = {'eai-sess': self.sess.cookies["eai-sess"]}
-            self.sess.cookies = requests.cookies.cookiejar_from_dict(cookie_dict)
-            resp = self.sess.get(url=self.captcha_url, headers=self.headers)
-            cap = ocr.classification(resp.content)
-            print("本次验证码为：", cap)
-        except Exception as e:
-            print("Captcha ocr error: ",e)
+#             ocr = ddddocr.DdddOcr() # 使用老版本ddddocr
+#             cookie_dict = {'eai-sess': self.sess.cookies["eai-sess"]}
+#             self.sess.cookies = requests.cookies.cookiejar_from_dict(cookie_dict)
+#             resp = self.sess.get(url=self.captcha_url, headers=self.headers)
+#             cap = ocr.classification(resp.content)
+#             print("本次验证码为：", cap)
+#         except Exception as e:
+#             print("Captcha ocr error: ",e)
 
 
         new_info = old_info.copy()
@@ -131,7 +131,7 @@ class ClockIn(object):
         new_info['gwszdd'] = ""
         new_info['ismoved'] = 0
         # captcha
-        new_info['verifyCode'] = cap
+#         new_info['verifyCode'] = cap
 
         # 2021.08.05 Fix 2
         magics = re.findall(r'"([0-9a-f]{32})":\s*"([^\"]+)"', html)
