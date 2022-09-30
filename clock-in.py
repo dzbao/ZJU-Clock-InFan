@@ -10,7 +10,7 @@ import time
 import sys
 import time
 import random
-import ddddocr
+# import ddddocr
 
 class ClockIn(object):
     """Hit card class
