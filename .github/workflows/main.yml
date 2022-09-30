@@ -12,7 +12,7 @@ on:
 jobs:
   ClockIn:
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
+#     if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -20,9 +20,9 @@ jobs:
         run: |
           sudo -E apt-get -yqq update
           sudo -E apt-get -yqq install python3
-      - name: Install ddddocr
-        run: |
-          sudo pip3 install ddddocr
+#       - name: Install ddddocr
+#         run: |
+#           sudo pip3 install ddddocr
       - name: Clock In
         env:
           ACCOUNT: ${{ secrets.ACCOUNT }}

@@ -10,7 +10,7 @@ import time
 import sys
 import time
 import random
-import ddddocr
+# import ddddocr
 
 class ClockIn(object):
     """Hit card class
@@ -95,18 +95,18 @@ class ClockIn(object):
         
 
         # 试试ocr
-        try:
-            # 查询cookie
-            # print(self.sess.cookies["eai-sess"])
+#         try:
+#             # 查询cookie
+#             # print(self.sess.cookies["eai-sess"])
 
-            ocr = ddddocr.DdddOcr() # 使用老版本ddddocr
-            cookie_dict = {'eai-sess': self.sess.cookies["eai-sess"]}
-            self.sess.cookies = requests.cookies.cookiejar_from_dict(cookie_dict)
-            resp = self.sess.get(url=self.captcha_url, headers=self.headers)
-            cap = ocr.classification(resp.content)
-            print("本次验证码为：", cap)
-        except Exception as e:
-            print("Captcha ocr error: ",e)
+#             ocr = ddddocr.DdddOcr() # 使用老版本ddddocr
+#             cookie_dict = {'eai-sess': self.sess.cookies["eai-sess"]}
+#             self.sess.cookies = requests.cookies.cookiejar_from_dict(cookie_dict)
+#             resp = self.sess.get(url=self.captcha_url, headers=self.headers)
+#             cap = ocr.classification(resp.content)
+#             print("本次验证码为：", cap)
+#         except Exception as e:
+#             print("Captcha ocr error: ",e)
 
 
         new_info = old_info.copy()
@@ -117,6 +117,8 @@ class ClockIn(object):
         new_info["created"] = round(time.time())
         new_info["address"] = "浙江省杭州市西湖区"
         new_info["area"] = "浙江省 杭州市 西湖区"
+#         new_info["address"] = "广东省东莞市寮步镇碧园路乐荟城"
+#         new_info["area"] = "广东省 东莞市"
         new_info["province"] = new_info["area"].split(' ')[0]
         new_info["city"] = new_info["area"].split(' ')[1]
         # form change
@@ -125,13 +127,14 @@ class ClockIn(object):
         new_info['sfsqhzjkk'] = 1   # 是否申领杭州健康码
         new_info['sqhzjkkys'] = 1   # 杭州健康吗颜色，1:绿色 2:红色 3:黄色
         new_info['sfqrxxss'] = 1    # 是否确认信息属实
+        new_info['internship'] = 1  # 实习
         new_info['szgjcs'] = ""
         new_info['gwszdd'] = ""
         new_info['jcqzrq'] = ""
         new_info['gwszdd'] = ""
         new_info['ismoved'] = 0
         # captcha
-        new_info['verifyCode'] = cap
+#         new_info['verifyCode'] = cap
 
         # 2021.08.05 Fix 2
         magics = re.findall(r'"([0-9a-f]{32})":\s*"([^\"]+)"', html)
