@@ -1,18 +1,19 @@
-name: ClockIn
+name: 打卡
 
 on:
+  workflow_dispatch:
   push:
     branches: 
       - master
-  watch:
-    types: started
+  #watch:
+  #  types: started
   schedule:
-    - cron: 0 0,1,21,22,23 * * *
+     - cron: '0 0,1,8 * * *'
 
 jobs:
   ClockIn:
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
+    #if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -20,6 +21,10 @@ jobs:
         run: |
           sudo -E apt-get -yqq update
           sudo -E apt-get -yqq install python3
+          
+      # - name: DDDDOCR
+       # run: |
+        # python3 -m pip install ddddocr
       - name: Clock In
         env:
           ACCOUNT: ${{ secrets.ACCOUNT }}
